@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateForeignTableCity extends Migration
+class AddCascadeCityTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,13 @@ class CreateForeignTableCity extends Migration
     public function up()
     {
         Schema::table('city', function (Blueprint $table) {
-            $table->foreign('country_id', 'fk_city_country')->references('country_id')->on('country');
+            $table->engine = 'InnoDB';
+            // $table->dropForeign('fk_city_country');
+            $table->foreign('country_id', 'fk_city_country')
+                ->references('country_id')
+                ->on('country')
+                ->onUpdate('NO ACTION')
+                ->onDelete('CASCADE');
         });
     }
 

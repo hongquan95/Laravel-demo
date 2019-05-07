@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateForeignTableCity extends Migration
+class AddCascadeCustomerAddressTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,7 @@ class CreateForeignTableCity extends Migration
      */
     public function up()
     {
-        Schema::table('city', function (Blueprint $table) {
-            $table->foreign('country_id', 'fk_city_country')->references('country_id')->on('country');
-        });
+        Schema
     }
 
     /**
@@ -25,8 +23,6 @@ class CreateForeignTableCity extends Migration
      */
     public function down()
     {
-        Schema::table('city', function (Blueprint $table) {
-            $table->dropForeign('fk_city_country');
-        });
+        //
     }
 }
