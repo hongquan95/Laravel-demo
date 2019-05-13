@@ -14,15 +14,18 @@ class PaymentTotal implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $payment;
+    public $type;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Payment $payment)
+    public function __construct(Payment $payment, string $type)
     {
 
         $this->payment = $payment;
+        $this->type = $type;
     }
 
     /**
@@ -33,6 +36,7 @@ class PaymentTotal implements ShouldQueue
     public function handle()
     {
         $paymentsAmount = Payment::where('payment_id', '<', $this->payment->payment_id)->sum('amount');
-        \Log::info('Payment to of payments_id less than ' . $this->payment->payment_id. ' 12312312   '. $paymentsAmount . ' USD');
+        \Log::info('==============='. strtoupper($this->type). '==================');
+        \Log::info('Payment to of payments_id less than ' . $this->payment->payment_id. 'is '. $paymentsAmount . ' USD');
     }
 }

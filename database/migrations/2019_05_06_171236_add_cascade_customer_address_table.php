@@ -13,7 +13,6 @@ class AddCascadeCustomerAddressTable extends Migration
      */
     public function up()
     {
-        Schema
     }
 
     /**

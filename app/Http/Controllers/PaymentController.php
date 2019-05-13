@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Payment;
-use Illuminate\Http\Request;
-use App\Jobs\PaymentTotal;
 use Dispatchable;
+use App\Jobs\PaymentTotal;
+use Illuminate\Http\Request;
+use App\Events\PaymentCreateEvent;
 
 class PaymentController extends Controller
 {
@@ -37,7 +38,15 @@ class PaymentController extends Controller
     public function store(Request $request)
     {
         $payment = Payment::find($request->payment_id);
-        PaymentTotal::dispatch($payment)->onQueue('payment');
+        switch ($request->type) {
+            case 'queue':
+                PaymentTotal::dispatch($payment, $request->type)->onQueue('payment');
+                break;
+            case 'event':
+                event(new PaymentCreateEvent($payment, $request->type));
+                break;
+                return redirect()->route('payment.create');
+        }
         return redirect()->route('payment.create');
     }
 

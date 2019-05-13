@@ -69,6 +69,11 @@
                 <div class="title m-b-md">
                     <form action="{{route('payment.store')}}" method="post">
                         @csrf
+                        <select name="type" id="">
+                            <option value="queue">QUEUE</option>
+                            <option value="event">EVENT</option>
+                            <option value="event-queue">EVENT ON QUEUE</option>
+                        </select>
                         <input type="text" name="payment_id" placeholder="Payment Id"><br>
                         <input class="btn btn-primary" type="submit" value="Create">
                     </form>
