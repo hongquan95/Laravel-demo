@@ -15,3 +15,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::resource('payment', 'PaymentController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('order/update', 'OrderController@updateStt');
+    Route::resource('order', 'OrderController');
+});
